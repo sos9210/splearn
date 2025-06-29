@@ -1,13 +1,13 @@
-package com.reehi;
+package com.splearn;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReehiApplication {
+public class SplearnApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ReehiApplication.class, args);
+        SpringApplication.run(SplearnApplication.class, args);
     }
 
 }

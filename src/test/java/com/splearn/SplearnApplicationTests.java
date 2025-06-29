@@ -1,10 +1,10 @@
-package com.reehi;
+package com.splearn;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReehiApplicationTests {
+class SplearnApplicationTests {
 
     @Test
     void contextLoads() {
