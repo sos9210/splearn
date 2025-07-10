@@ -3,8 +3,6 @@ package com.splearn.domain;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.regex.Pattern;
-
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.*;
 
@@ -22,7 +20,7 @@ public class Member {
 
     private Member() {}
 
-    public static Member create(MemberCreateRequest createRequest, PasswordEncoder passwordEncoder) {
+    public static Member register(MemberRegisterRequest createRequest, PasswordEncoder passwordEncoder) {
         Member member = new Member();
 
         member.email = new Email(createRequest.email());
