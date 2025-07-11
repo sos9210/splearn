@@ -1,24 +1,33 @@
 package com.splearn.domain;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 @ToString
 @Getter
 public class Member {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Embedded @NaturalId // @NaturalId 를 사용하면 @Id와 마찬가지로 영속성컨텍스트에 캐시된다..
     private Email email;
 
     private String nickname;
 
     private String passwordHash;
 
+    @Enumerated
     private MemberStatus status;
-
-    private Member() {}
 
     public static Member register(MemberRegisterRequest createRequest, PasswordEncoder passwordEncoder) {
         Member member = new Member();
