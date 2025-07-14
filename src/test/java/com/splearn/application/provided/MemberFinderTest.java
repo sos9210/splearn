@@ -4,7 +4,6 @@ import com.splearn.SplearnTestConfiguration;
 import com.splearn.domain.Member;
 import com.splearn.domain.MemberFixture;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -34,7 +33,6 @@ record MemberFinderTest(
     }
 
     @Test
-
     void findFail() {
         assertThatThrownBy(() -> memberFinder.find(999L))
                 .isInstanceOf(IllegalArgumentException.class);
