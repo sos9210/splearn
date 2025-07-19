@@ -29,6 +29,9 @@ public class Member extends AbstractEntity {
     //@Column(length = 50, nullable = false)
     private MemberStatus status;
 
+    @OneToOne
+    private MemberDetail detail;
+
     public static Member register(MemberRegisterRequest createRequest, PasswordEncoder passwordEncoder) {
         Member member = new Member();
 
