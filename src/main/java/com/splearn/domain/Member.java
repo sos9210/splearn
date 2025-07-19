@@ -12,21 +12,21 @@ import static org.springframework.util.Assert.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@ToString
+@ToString(callSuper = true)
 @Getter
-public class Member {
+public class Member extends AbstractEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Embedded @NaturalId // @NaturalId 를 사용하면 @Id와 마찬가지로 영속성컨텍스트에 캐시된다..
+    @NaturalId // @NaturalId 를 사용하면 @Id와 마찬가지로 영속성컨텍스트에 캐시된다..
     private Email email;
 
+    //@Column(length = 100, nullable = false)
     private String nickname;
 
+    //@Column(length = 200, nullable = false)
     private String passwordHash;
 
-    @Enumerated
+    //@Enumerated
+    //@Column(length = 50, nullable = false)
     private MemberStatus status;
 
     public static Member register(MemberRegisterRequest createRequest, PasswordEncoder passwordEncoder) {
