@@ -1,8 +1,8 @@
-package com.splearn.application.provided;
+package com.splearn.application.member.provided;
 
 import com.splearn.SplearnTestConfiguration;
-import com.splearn.domain.Member;
-import com.splearn.domain.MemberFixture;
+import com.splearn.domain.member.Member;
+import com.splearn.domain.member.MemberFixture;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

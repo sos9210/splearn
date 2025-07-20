@@ -1,10 +1,13 @@
-package com.splearn.application;
+package com.splearn.application.member;
 
-import com.splearn.application.provided.MemberFinder;
-import com.splearn.application.provided.MemberRegister;
-import com.splearn.application.required.EmailSender;
-import com.splearn.application.required.MemberRepository;
-import com.splearn.domain.*;
+import com.splearn.application.member.provided.MemberFinder;
+import com.splearn.application.member.provided.MemberRegister;
+import com.splearn.application.member.required.EmailSender;
+import com.splearn.application.member.required.MemberRepository;
+import com.splearn.domain.member.*;
+import com.splearn.domain.shared.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,7 @@ public class MemberModifyService implements MemberRegister {
     private final MemberRepository memberRepository;
     private final EmailSender emailSender;
     private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public Member register(MemberRegisterRequest registerRequest) {
@@ -44,6 +48,37 @@ public class MemberModifyService implements MemberRegister {
          * 2. domain Event Publish, 도메인 이벤트를 발행하는 기능을 사용할때 업데이트시에도 save호출이 필수다.
          */
         return memberRepository.save(member);
+    }
+
+    @Override
+    public Member deactivate(Long memberId) {
+        Member member = memberFinder.find(memberId);
+
+        member.deactivate();
+
+        return memberRepository.save(member);
+    }
+
+    @Override
+    public Member updateInfo(Long memberId, MemberInfoUpdateRequest memberInfoUpdateRequest) {
+        Member member = memberFinder.find(memberId);
+
+        checkDuplicateProfile(member, memberInfoUpdateRequest.profileAddress());
+
+        member.updateInfo(memberInfoUpdateRequest);
+
+        return memberRepository.save(member);
+    }
+
+    private void checkDuplicateProfile(Member member, String profileAddress) {
+        if(profileAddress.isEmpty()) return;
+
+        Profile curronetProfile = member.getDetail().getProfile();
+        if(curronetProfile != null && curronetProfile.address().equals(profileAddress)) return;
+
+        if(memberRepository.findByProfile(new Profile(profileAddress)).isPresent()) {
+            throw new DuplicateProfileException("이미 존재하는 프로필주소 입니다.:" + profileAddress);
+        }
     }
 
     private void sendWelcomeEmail(Member member) {

@@ -1,4 +1,4 @@
-package com.splearn.domain;
+package com.splearn.domain.member;
 
 public interface PasswordEncoder {
     String encode(String password);

@@ -1,6 +1,7 @@
-package com.splearn.application.required;
+package com.splearn.application.member.required;
 
-import com.splearn.domain.Member;
+import com.splearn.domain.member.Member;
+import com.splearn.domain.member.MemberStatus;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import static com.splearn.domain.MemberFixture.*;
+import static com.splearn.domain.member.MemberFixture.*;
+import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 class MemberRepositoryTest {
@@ -24,11 +26,17 @@ class MemberRepositoryTest {
 
         Member member = Member.register(createMemberRegisterRequest(), createPasswordEncoder());
 
-        Assertions.assertThat(member.getId()).isNull();
+        assertThat(member.getId()).isNull();
         memberRepository.save(member);
-        Assertions.assertThat(member.getId()).isNotNull();
+        assertThat(member.getId()).isNotNull();
 
         entityManager.flush();
+        entityManager.clear();
+
+        Member found = memberRepository.findById(member.getId()).orElseThrow();
+        assertThat(found.getStatus()).isEqualTo(MemberStatus.PENDING);
+        assertThat(found.getDetail().getRegisteredAt()).isNotNull();
+
     }
     @Test
     void duplicateEmailFail() {
@@ -37,7 +45,7 @@ class MemberRepositoryTest {
 
         memberRepository.save(member1);
         Member member2 = Member.register(createMemberRegisterRequest(), createPasswordEncoder());
-        Assertions.assertThatThrownBy(() -> memberRepository.save(member2)).isInstanceOf(DataIntegrityViolationException.class);
+        assertThatThrownBy(() -> memberRepository.save(member2)).isInstanceOf(DataIntegrityViolationException.class);
 
     }
 }

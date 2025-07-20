@@ -1,12 +1,12 @@
-//package com.splearn.application.provided;
+//package com.splearn.application.member.provided;
 //
 //import com.splearn.application.MemberService;
-//import com.splearn.application.required.EmailSender;
-//import com.splearn.application.required.MemberRepository;
-//import com.splearn.domain.Email;
-//import com.splearn.domain.Member;
-//import com.splearn.domain.MemberFixture;
-//import com.splearn.domain.MemberStatus;
+//import com.splearn.application.member.required.EmailSender;
+//import com.splearn.application.member.required.MemberRepository;
+//import com.splearn.domain.shared.Email;
+//import com.splearn.domain.member.Member;
+//import com.splearn.domain.member.MemberFixture;
+//import com.splearn.domain.member.MemberStatus;
 //import org.junit.jupiter.api.Test;
 //import org.mockito.Mockito;
 //import org.springframework.test.util.ReflectionTestUtils;

@@ -1,7 +1,4 @@
-package com.splearn.domain;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+package com.splearn.domain.shared;
 
 import java.util.regex.Pattern;
 
